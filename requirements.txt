@@ -1,0 +1,4 @@
+ultralytics>=8.0.0          # YOLOv8 for object detection
+deep-sort-realtime          # DeepSORT tracker for object tracking
+opencv-python               # For video capture and frame processing
+numpy                       # For Array and numerical operations of frames
