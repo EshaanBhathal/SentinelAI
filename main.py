@@ -3,8 +3,10 @@ from ultralytics import YOLO
 
 from camera import Camera
 from person import Person
+from message import Message
 
-CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=1>&subtype=0"
+RECIPIENTS = ["eshaan.cs.test@gmail.com"]
+CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=2>&subtype=0"
 #CAMERA_URL = 0    # For testing
 
 
@@ -14,6 +16,7 @@ def main():
     # Creates objects
     video = Camera(CAMERA_URL, 1920, 1080)
     model = YOLO('yolov8n.pt')
+    email = Message("eshaan.cs.test@gmail.com", "lnqt sqdg tiln aeov")
 
     # loop through frames
     while True:
@@ -53,9 +56,11 @@ def main():
             # Drawing the tracking boxes
             person.displayBox(frame, model, video.frameWidth, video.frameHeight)
 
-            # Creating an image of the person
+            # Creating an image of the person and sending an email
             if (person.getFrameNumber() == 50):
-                video.createScreenshotPerson(ogFrame, person)
+                photo = video.createScreenshotPerson(ogFrame, person)
+                email.sendEmail(RECIPIENTS, photo)
+
 
             person.increaseFrames()
 

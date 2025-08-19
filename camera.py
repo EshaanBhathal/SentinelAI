@@ -53,6 +53,8 @@ class Camera:
     def createScreenshotPerson(self, frame, person):
         x1,y1,x2,y2 = person.getPosition()
         cropped = frame[y1:y2, x1:x2]
-        cv.imwrite(f"peoplePhotos/Person{person.getTrackID()}.jpg", cropped)
+        addr = f"peoplePhotos/Person{person.getTrackID()}.jpg"
+        cv.imwrite(addr, cropped)
+        return addr
         
 
