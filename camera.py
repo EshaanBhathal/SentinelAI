@@ -1,5 +1,6 @@
 
 import cv2 as cv
+import os
 
 def resolutionChange(capture, width, height):
     capture.set(3, width)
@@ -33,5 +34,25 @@ class Camera:
         self.capture.release()
         cv.destroyAllWindows()
         print("\n -------- The Video Stopped Playing -------- \n")
+
+        # Remove all photos created
+        if not os.path.isdir("peoplePhotos/"):
+            print(f"Error: Directory 'peoplePhotos/' does not exist or is not a directory.")
+            return
+    
+        for filename in os.listdir("peoplePhotos/"):
+            path = os.path.join("peoplePhotos/", filename)
+            if os.path.isfile(path):
+                try:
+                    os.remove(path)
+                    print(f"file {path} was deleted")
+                except:
+                    print("error")
+
+
+    def createScreenshotPerson(self, frame, person):
+        x1,y1,x2,y2 = person.getPosition()
+        cropped = frame[y1:y2, x1:x2]
+        cv.imwrite(f"peoplePhotos/Person{person.getTrackID()}.jpg", cropped)
         
 

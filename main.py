@@ -19,7 +19,8 @@ def main():
     while True:
 
         # Read the frame
-        isCaptured, frame = video.read()
+        isCaptured, ogFrame = video.read()
+        frame = ogFrame.copy()
         if not isCaptured:
             break
         video.addText("Press 'q' to Exit", (20,70), 2, (255,255,255), 6)
@@ -48,10 +49,16 @@ def main():
             cls = int(box.cls.item())
             box = [int(x) for x in box.xyxy[0]]
             person.setInfo(conf, cls, box)
-            person.increaseFrames()
 
             # Drawing the tracking boxes
             person.displayBox(frame, model, video.frameWidth, video.frameHeight)
+
+            # Creating an image of the person
+            if (person.getFrameNumber() == 50):
+                video.createScreenshotPerson(ogFrame, person)
+
+            person.increaseFrames()
+
 
         # Display the frame
         cv.imshow('frame', frame)
@@ -61,7 +68,7 @@ def main():
             break;
 
     video.cleanup()
-
+    print("\n -------- The Program Has Terminated -------- \n")
 
 
 if __name__ == "__main__":
