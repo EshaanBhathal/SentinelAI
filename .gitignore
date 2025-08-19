@@ -3,3 +3,4 @@ __pycache__/
 DeepSortImplementation.txt
 yolov8_env
 peoplePhotos/*.jpg
+*.pt
