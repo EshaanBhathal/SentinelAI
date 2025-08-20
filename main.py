@@ -6,7 +6,7 @@ from person import Person
 from message import Message
 
 RECIPIENTS = ["eshaan.cs.test@gmail.com"]
-CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=1>&subtype=0"
+CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=2>&subtype=0"
 #CAMERA_URL = 0    # For testing
 
 
@@ -14,12 +14,16 @@ CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=1>&s
 def main():
     
     # Creates objects
-    video = Camera(CAMERA_URL, 1920, 1080)
+    video = Camera(CAMERA_URL, 1290, 720)
     model = YOLO('yolov8n.pt')
+    # model.to('cuda') # If you want to use the GPU
+    print(model.device)
     email = Message("eshaan.cs.test@gmail.com", "lnqt sqdg tiln aeov")
+    i = 1
 
     # loop through frames
     while True:
+        i += 1
 
         # Read the frame
         isCaptured, frame = video.read()
@@ -28,8 +32,11 @@ def main():
             break
         video.addText("Press 'q' to Exit", (20,70), 2, (255,255,255), 6)
 
+        if (i % 4 != 0):
+            continue
+
         # Track objects on the frame
-        tracking = model.track(frame, persist=True, conf=0.5)[0]
+        tracking = model.track(frame, persist=True, conf=0.5, classes=[0])[0]
 
         # looping through all objects
         for box in tracking.boxes:
@@ -57,9 +64,9 @@ def main():
             person.displayBox(frame, model, video.frameWidth, video.frameHeight)
 
             # Creating an image of the person and sending an email
-            if (person.getFrameNumber() == 50):
+            if (person.getFrameNumber() == 10):
                 photo = video.createScreenshotPerson(ogFrame, person)
-                email.sendEmail(RECIPIENTS, photo)
+                email.sendEmail(RECIPIENTS, photo, person.getTrackId(), person.getConfidence())
 
 
             person.increaseFrames()

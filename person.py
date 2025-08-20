@@ -38,6 +38,10 @@ class Person:
     def getTrackID(self):
         return self.track_id
     
+    
+    def getConfidence(self):
+        return self.conf
+    
 
     def getPosition(self):
         return self.box
