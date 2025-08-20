@@ -1,3 +1,4 @@
 ultralytics>=8.0.0          # YOLOv8 for object detection
 opencv-python               # For video capture and frame processing
 yagmail                     # Sending emails
+python 3.10.11

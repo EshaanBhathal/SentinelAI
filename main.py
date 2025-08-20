@@ -6,7 +6,7 @@ from person import Person
 from message import Message
 
 RECIPIENTS = ["eshaan.cs.test@gmail.com"]
-CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=2>&subtype=0"
+CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=1>&subtype=0"
 #CAMERA_URL = 0    # For testing
 
 
@@ -22,8 +22,8 @@ def main():
     while True:
 
         # Read the frame
-        isCaptured, ogFrame = video.read()
-        frame = ogFrame.copy()
+        isCaptured, frame = video.read()
+        ogFrame = frame.copy()
         if not isCaptured:
             break
         video.addText("Press 'q' to Exit", (20,70), 2, (255,255,255), 6)
@@ -66,6 +66,8 @@ def main():
 
 
         # Display the frame
+        cv.namedWindow('frame', cv.WINDOW_NORMAL)
+        cv.setWindowProperty('frame', cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
         cv.imshow('frame', frame)
 
         # Exiting the program when 'q' pressed
