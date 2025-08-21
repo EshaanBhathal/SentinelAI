@@ -6,7 +6,7 @@ from person import Person
 from message import Message
 
 RECIPIENTS = ["eshaan.cs.test@gmail.com"]
-CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=2>&subtype=0"
+CAMERA_URL = "rtsp://admin:Bhathal@7@10.0.0.252:554/cam/realmonitor?channel=1>&subtype=0"
 #CAMERA_URL = 0    # For testing
 
 
@@ -32,7 +32,7 @@ def main():
             break
         video.addText("Press 'q' to Exit", (20,70), 2, (255,255,255), 6)
 
-        if (i % 4 != 0):
+        if (i % 3 != 0):
             continue
 
         # Track objects on the frame
