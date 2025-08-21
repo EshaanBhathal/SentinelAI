@@ -66,7 +66,7 @@ def main():
             # Creating an image of the person and sending an email
             if (person.getFrameNumber() == 10):
                 photo = video.createScreenshotPerson(ogFrame, person)
-                email.sendEmail(RECIPIENTS, photo, person.getTrackId(), person.getConfidence())
+                email.sendEmail(RECIPIENTS, photo, person.getTrackID(), person.getConfidence())
 
 
             person.increaseFrames()
